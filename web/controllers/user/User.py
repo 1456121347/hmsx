@@ -4,7 +4,7 @@ router_user = Blueprint('user_page',__name__)
 
 @router_user.route("/login")
 def login():
-    return "登录页面"
+    return "登录页面11"
 
 @router_user.route("/logout")
 def logout():
