@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6" >
+        <div class="col-md-6">
             <h2 class="font-bold">登录图片</h2>
             <div class="row">
                 <a href="javascript:void(0)" class="thumbnail">
@@ -17,10 +17,10 @@
                         <h2 class="font-bold">登录</h2>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="login_name" class="form-control" placeholder="请输入用户名"> 
+                        用户名：<input type="text" name="login_name" class="form-control" placeholder="请输入用户名">
                     </div>
                     <div class="form-group">
-                        <input type="password" name="login_pwd" class="form-control" placeholder="请输入密码"> 
+                        密码：<input type="password" name="login_pwd" class="form-control" placeholder="请输入密码">
                     </div>
                     <button type="button" class="btn btn-primary block full-width m-b do-login">登录</button>
                 </div>
@@ -39,5 +39,5 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{{ buildStaticUrl('/js/user/login.js') }}"></script>
+<script src="{{ buildStaticUrl('/js/user/login.js') }}"></script>
 {% endblock %}
