@@ -1,7 +1,9 @@
     
-from flask import Blueprint,render_template,request,jsonify,make_response
+from flask import Blueprint,render_template,request,jsonify,make_response,redirect,g
 from common.models.User import User
 from common.libs.user.UserService import UserService
+from common.libs.UrlManager import UrlManager
+from common.libs.Helper import ops_render
 
 import json
 
@@ -10,7 +12,9 @@ router_user = Blueprint('user_page',__name__)
 @router_user.route("/login",methods=['GET','POST'])
 def login():
     if request.method == 'GET':
-        return render_template("user/login.html")
+        # if g.current_user:
+        #     return redirect(UrlManager.buildUrl("/"))
+        return ops_render("user/login.html")
     
     resp = {
         'code':200,
@@ -31,6 +35,7 @@ def login():
         return jsonify(resp)
     # 从数据库中取出user
     user_info = User.query.filter_by(login_name=login_name).first()
+    print(user_info)
     if not user_info:
         resp['code'] = -1
         resp['msg'] = "用户不存在"
@@ -50,7 +55,7 @@ def login():
     
     response = make_response(json.dumps({'code':200,'msg':'登录成功~~~'}))
     # Cookie中存入的信息是user_info.uid,user_info
-    response.set_cookie("hmsc_1901C","%s@%s"%(UserService.generateAuthCode(user_info),user_info.uid),60*60*24*15)
+    response.set_cookie("hmsx_1903C","%s@%s"%(UserService.generateAuthCode(user_info),user_info.uid),60*60*24*15)
     return response
     
 
