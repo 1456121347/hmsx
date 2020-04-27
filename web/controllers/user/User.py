@@ -16,6 +16,7 @@ def login():
         if g.current_user:
             return redirect(UrlManager.buildUrl("/"))
         return ops_render("user/login.html")
+      
         
     # POST请求
     resp = {
@@ -62,7 +63,9 @@ def login():
 
 @router_user.route("/logout")
 def logout():
-    return "登出"
+    response = make_response(redirect(UrlManager.buildUrl("/user/login")))
+    response.delete_cookie(app.config['AUTH_COOKIE_NAME'])
+    return response
 
 @router_user.route("/edit")
 def edit():
