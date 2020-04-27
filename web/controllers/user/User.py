@@ -1,5 +1,6 @@
-    
-from flask import Blueprint,render_template,request,jsonify,make_response,redirect,g
+from flask import Blueprint,request,jsonify,make_response,redirect,g
+
+from application import app
 from common.models.User import User
 from common.libs.user.UserService import UserService
 from common.libs.UrlManager import UrlManager
@@ -12,10 +13,11 @@ router_user = Blueprint('user_page',__name__)
 @router_user.route("/login",methods=['GET','POST'])
 def login():
     if request.method == 'GET':
-        # if g.current_user:
-        #     return redirect(UrlManager.buildUrl("/"))
+        if g.current_user:
+            return redirect(UrlManager.buildUrl("/"))
         return ops_render("user/login.html")
-    
+        
+    # POST请求
     resp = {
         'code':200,
         'msg':'登录成功',
@@ -35,7 +37,6 @@ def login():
         return jsonify(resp)
     # 从数据库中取出user
     user_info = User.query.filter_by(login_name=login_name).first()
-    print(user_info)
     if not user_info:
         resp['code'] = -1
         resp['msg'] = "用户不存在"
@@ -55,7 +56,7 @@ def login():
     
     response = make_response(json.dumps({'code':200,'msg':'登录成功~~~'}))
     # Cookie中存入的信息是user_info.uid,user_info
-    response.set_cookie("hmsx_1903C","%s@%s"%(UserService.generateAuthCode(user_info),user_info.uid),60*60*24*15)
+    response.set_cookie(app.config['AUTH_COOKIE_NAME'],"%s@%s"%(UserService.generateAuthCode(user_info),user_info.uid),60*60*24*15)
     return response
     
 
@@ -65,8 +66,8 @@ def logout():
 
 @router_user.route("/edit")
 def edit():
-    return "编辑"
+    return ops_render("user/edit.html")
 
 @router_user.route("/reset-pwd")
 def resetPwd():
-    return "重置密码"
+    return ops_render("user/reset_pwd.html")
