@@ -1,4 +1,3 @@
-    
 import time
 
 class UrlManager(object):
@@ -17,4 +16,4 @@ class UrlManager(object):
 
     @staticmethod
     def buildImageUrl(path):
-        pass   
+        pass  
