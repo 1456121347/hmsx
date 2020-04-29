@@ -4,13 +4,9 @@ from sqlalchemy.schema import FetchedValue
 from flask_sqlalchemy import SQLAlchemy
 from application import db
 
-# Base = declarative_base()
-# metadata = Base.metadata
-
-
-
 class Member(db.Model):
-    __tablename__ = 'members'
+    __tablename__ = 'member'
+
     id = db.Column(db.Integer, primary_key=True)
     nickname = db.Column(db.String(100), nullable=False, server_default=db.FetchedValue(), info='????')
     mobile = db.Column(db.String(20), nullable=False, server_default=db.FetchedValue(), info='??????')
