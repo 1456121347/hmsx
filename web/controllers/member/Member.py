@@ -53,7 +53,6 @@ def set():
     req = request.args
     id = int(req.get('id',0)) if req['id'] else 1
     member_info = Member.query.filter_by(id=id).first()
-    
     resp_data['info'] = member_info
     return ops_render("member/set.html",resp_data)
 
